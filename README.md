@@ -110,5 +110,3 @@ http://localhost:4000 (for AS server)
 http://localhost:4001 (for US server)
 http://localhost:4002 (for EU server)
 ```
-
-# MultiRegionServers
