@@ -1,0 +1,65 @@
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  backend_as:
+    build: ./server
+    environment:
+      - REGION=AS
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+
+  backend_us:
+    build: ./server
+    environment:
+      - REGION=US
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      - redis
+
+  backend_eu:
+    build: ./server
+    environment:
+      - REGION=EU
+      - PORT=3002
+    ports:
+      - "3002:3002"
+    depends_on:
+      - redis
+
+  frontend_as:
+    build: ./client
+    environment:
+      - NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+      - NEXT_PUBLIC_REGION=AS
+    ports:
+      - "4000:3000"
+    depends_on:
+      - backend_as
+
+  frontend_us:
+    build: ./client
+    environment:
+      - NEXT_PUBLIC_SERVER_URL=http://localhost:3001
+      - NEXT_PUBLIC_REGION=US
+    ports:
+      - "4001:3000"
+    depends_on:
+      - backend_us
+
+  frontend_eu:
+    build: ./client
+    environment:
+      - NEXT_PUBLIC_SERVER_URL=http://localhost:3002
+      - NEXT_PUBLIC_REGION=EU
+    ports:
+      - "4002:3000"
+    depends_on:
+      - backend_eu

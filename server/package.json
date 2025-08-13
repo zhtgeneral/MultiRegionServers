@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "@types/node": "^24.0.10",
+    "cors": "^2.8.5",
+    "cross-env": "^10.0.0",
+    "express": "^5.1.0",
+    "http": "^0.0.1-security",
+    "ioredis": "^5.6.1",
+    "socket.io": "^4.8.1",
+    "typescript": "^5.8.3",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.2.2",
+    "@types/express": "^5.0.3",
+    "@types/mocha": "^10.0.10",
+    "@types/sinon": "^17.0.4",
+    "@types/supertest": "^6.0.3",
+    "chai": "^5.2.0",
+    "mocha": "^11.7.1",
+    "sinon": "^21.0.0",
+    "supertest": "^7.1.1",
+    "ts-node": "^10.9.2"
+  },
+  "scripts": {
+    "dev": "npx ts-node src/index.ts",
+    "dev:as": "npm run redis && cross-env NODE_ENV=development PORT=3000 REGION=AS npm run dev",
+    "dev:us": "npm run redis && cross-env NODE_ENV=development PORT=3001 REGION=US npm run dev",
+    "dev:eu": "npm run redis && cross-env NODE_ENV=development PORT=3002 REGION=EU npm run dev",
+    "start": "npm run redis && npx ts-node src/index.ts",
+    "redis": "docker rm -f redis-server && docker run --name redis-server -p 6379:6379 -d redis"
+  }
+}
